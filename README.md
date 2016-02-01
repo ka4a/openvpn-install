@@ -11,6 +11,6 @@ Please check that you have a openvpn installed !
 Run the script and follow the assistant:  
 `opkg update`  
 `opkg install bash wget openssl-util`  
-`wget --no-check-certificate https://github.com/kpoxxx/openvpn-install/blob/master/openvpn-install.sh  -O openvpn-install.sh && bash openvpn-install.sh`
+`wget --no-check-certificate https://raw.githubusercontent.com/kpoxxx/openvpn-install/master/openvpn-install.sh -O openvpn-install.sh && bash openvpn-install.sh`
 
 Once it ends, you can run it again to add more users or remove some of them.
