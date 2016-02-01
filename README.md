@@ -1,19 +1,20 @@
 ##openvpn-install
-OpenVPN [road warrior](http://en.wikipedia.org/wiki/Road_warrior_%28computing%29) installer for Debian, Ubuntu and CentOS.
+OpenVPN [road warrior](http://en.wikipedia.org/wiki/Road_warrior_%28computing%29) installer for Entware-NG running on NDMS v.2.
+Please see http://keenopt.ru and http://forums.zyxmon.org
 
-This script will let you setup your own VPN server in no more than a minute, even if you haven't used OpenVPN before. It isn't bulletproof but has been designed to be as unobtrusive and universal as possible.
+This script will let you setup your own VPN server in a few  minutes, even if you haven't used OpenVPN before. It isn't bulletproof but has been designed to be as unobtrusive and universal as possible.
 
 ###Installation
+ 
+Please check that you have a openvpn installed !
+
 Run the script and follow the assistant:
+`opkg update`
+`opkg install bash wget openssl-util`
+`wget --no-check-certificate https://github.com/kpoxxx/openvpn-install/blob/master/openvpn-install.sh  -O openvpn-install.sh && bash openvpn-install.sh`
 
-`wget git.io/vpn --no-check-certificate -O openvpn-install.sh && bash openvpn-install.sh`
+Once it ends, you can run it again to add more users or remove some of them.
 
-Once it ends, you can run it again to add more users, remove some of them or even completely uninstall OpenVPN.
-
-###I want to run my own VPN but don't have a server for that
-You can get a little VPS for just $2/month at [Host1Plus](https://affiliates.host1plus.com/ref/nyr.html).
-
-If you don't care about sharing an IP address with more people, check out the awesome [LowEndSpirit](http://lowendspirit.com/) project too. They are providing IPv6 VPS with NATed IPv4 for only 3€/year.
 
 ###Donations
 
