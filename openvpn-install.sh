@@ -189,9 +189,9 @@ crl-verify /opt/etc/openvpn/easy-rsa/pki/crl.pem" >> /opt/etc/openvpn/openvpn.co
     echo "#!/bin/sh
 
 [ \"\$table\" != "filter" ] && exit 0   # check the table name
-iptables -I FORWARD -i br0 -o tun0 -j ACCEPT
-iptables -I FORWARD -i tun0 -o br0 -j ACCEPT
 iptables -I INPUT -i tun0 -j ACCEPT
+iptables -I FORWARD -s 10.8.0.0/24 -j ACCEPT
+iptables -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -I INPUT -p udp --dport $PORT -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT" >> /opt/etc/ndm/netfilter.d/052-openvpn-filter.sh
 
