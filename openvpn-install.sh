@@ -96,8 +96,20 @@ else
     echo "listening to."
     read -p "IP address: " -e -i $IP IP
     echo ""
+    echo "What protocol do you want for OpenVPN?"
+    echo "1) UDP"
+    echo "2) TCP"
+    read -p "Protocol (1 or 2): " -e -i 1 PROTOCOL
+    echo ""
+    if [ "$PROTOCOL" = 2 ]; then
+        PROTOCOL=tcp
+	PORT=443
+    else
+        PROTOCOL=udp
+	PORT=1194
+    fi
     echo "What port do you want for OpenVPN?"
-    read -p "Port: " -e -i 1194 PORT
+    read -p "Port: " -e -i $PORT PORT
     echo ""
     echo "What DNS do you want to use with the VPN?"
     echo "   1) Current system resolvers"
@@ -138,7 +150,7 @@ else
     cp pki/ca.crt pki/private/ca.key pki/dh.pem pki/issued/server.crt pki/private/server.key /opt/etc/openvpn
     # Generate openvpn.conf
     echo "port $PORT
-proto udp
+proto $PROTOCOL
 dev tun
 sndbuf 0
 rcvbuf 0
@@ -192,7 +204,7 @@ crl-verify /opt/etc/openvpn/easy-rsa/pki/crl.pem" >> /opt/etc/openvpn/openvpn.co
 iptables -I INPUT -i tun0 -j ACCEPT
 iptables -I FORWARD -s 10.8.0.0/24 -j ACCEPT
 iptables -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -I INPUT -p udp --dport $PORT -j ACCEPT
+iptables -I INPUT -p $PROTOCOL --dport $PORT -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT" >> /opt/etc/ndm/netfilter.d/052-openvpn-filter.sh
 
 chmod +x /opt/etc/ndm/netfilter.d/052-openvpn-filter.sh
@@ -206,7 +218,7 @@ chmod +x /opt/etc/ndm/netfilter.d/053-openvpn-nat.sh
 
     echo "client
 dev tun
-proto udp
+proto $PROTOCOL
 sndbuf 0
 rcvbuf 0
 remote $IP $PORT
