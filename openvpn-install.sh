@@ -120,6 +120,17 @@ else
     echo "   6) Google"
     read -p "DNS [1-6]: " -e -i 1 DNS
     echo ""
+    echo "RSA key size 2048 or 1024 ?"
+    echo "1) 2048"
+    echo "2) 1024"
+    read -p "RSA key size (1 or 2): " -e -i 1 RSA_KEY_SIZE
+    echo ""
+    if [ "$RSA_KEY_SIZE" = 2 ]; then
+ 	RSA_KEY_SIZE=1024
+    else
+        RSA_KEY_SIZE=2048
+    fi
+    echo ""
     echo "Finally, tell me your name for the client cert"
     echo "Please, use one word only, no special characters"
     read -p "Client name: " -e -i client CLIENT
@@ -139,6 +150,9 @@ else
     chown -R root:root /opt/etc/openvpn/easy-rsa/
     rm -rf ~/EasyRSA-3.0.1.tgz
     cd /opt/etc/openvpn/easy-rsa/
+    if [ "$RSA_KEY_SIZE" = 1024 ]; then
+    sed 's/#set_var EASYRSA_KEY_SIZE<-->2048/set_var EASYRSA_KEY_SIZE<->1024/g' vars.example > vars
+    fi
     # Create the PKI, set up the CA, the DH params and the server + client certificates
     ./easyrsa init-pki
     ./easyrsa --batch build-ca nopass
