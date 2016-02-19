@@ -151,7 +151,9 @@ else
     rm -rf ~/EasyRSA-3.0.1.tgz
     cd /opt/etc/openvpn/easy-rsa/
     if [ "$RSA_KEY_SIZE" = 1024 ]; then
-    sed 's/#set_var EASYRSA_KEY_SIZE<-->2048/set_var EASYRSA_KEY_SIZE<->1024/g' vars.example > vars
+    cp vars.example vars
+    echo "set_var EASYRSA_KEY_SIZE 1024" > vars
+    #sed 's/#set_var EASYRSA_KEY_SIZE<-->2048/set_var EASYRSA_KEY_SIZE<->1024/g' vars.example > vars
     fi
     # Create the PKI, set up the CA, the DH params and the server + client certificates
     ./easyrsa init-pki
