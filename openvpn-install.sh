@@ -150,9 +150,8 @@ else
     rm -rf ~/EasyRSA-3.0.1.tgz
     cd /opt/etc/openvpn/easy-rsa/
     if [ "$RSA_KEY_SIZE" = 1024 ]; then
-    cp vars.example vars
-    echo "set_var EASYRSA_KEY_SIZE 1024" > vars
-    #sed 's/#set_var EASYRSA_KEY_SIZE<-->2048/set_var EASYRSA_KEY_SIZE<->1024/g' vars.example > vars
+	cp vars.example vars
+	echo "set_var EASYRSA_KEY_SIZE 1024" >> vars
     fi
     # Create the PKI, set up the CA, the DH params and the server + client certificates
     ./easyrsa init-pki
@@ -218,7 +217,6 @@ crl-verify /opt/etc/openvpn/easy-rsa/pki/crl.pem" >> /opt/etc/openvpn/openvpn.co
 [ \"\$table\" != "filter" ] && exit 0   # check the table name
 iptables -I INPUT -i tun0 -j ACCEPT
 iptables -I FORWARD -s 10.8.0.0/24 -j ACCEPT
-iptables -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -I INPUT -p $PROTOCOL --dport $PORT -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT" >> /opt/etc/ndm/netfilter.d/052-openvpn-filter.sh
 
